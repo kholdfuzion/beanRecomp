@@ -1,0 +1,27 @@
+[main]
+file_path = "./Bean.xex"
+out_directory_path = "./Beanout"
+switch_table_file_path = "bean.xex.switches.toml"
+
+skip_lr = false
+skip_msr = false
+ctr_as_local = false
+xer_as_local = false
+reserved_as_local = false
+cr_as_local = false
+non_argument_as_local = false
+non_volatile_as_local = false
+
+restgprlr_14_address = 0x823ed150
+savegprlr_14_address = 0x823ed100
+restfpr_14_address = 0x823ed55c
+savefpr_14_address = 0x823ed510
+restvmx_14_address = 0x823ef368
+savevmx_14_address = 0x823ef0d0
+restvmx_64_address = 0x823ef3fc
+savevmx_64_address = 0x823ef164
+
+
+longjmp_address = 0x823f1fa0
+setjmp_address = 0x823f22c0
+
