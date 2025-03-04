@@ -25,3 +25,8 @@ savevmx_64_address = 0x823ef164
 longjmp_address = 0x823f1fa0
 setjmp_address = 0x823f22c0
 
+# These functions do not exist in .pdata and do
+# not analyze properly due to having jump tables
+functions = [
+    { address = 0x8211caa8, size = 0x120 },
+]
