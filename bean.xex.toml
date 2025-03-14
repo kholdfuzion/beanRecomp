@@ -1,16 +1,16 @@
 [main]
-file_path = "./Bean.xex"
-out_directory_path = "./Beanout"
+file_path = "./data/game/Default_2.xex"
+out_directory_path = "./ppc"
 switch_table_file_path = "bean.xex.switches.toml"
 
-skip_lr = false
-skip_msr = false
-ctr_as_local = false
-xer_as_local = false
-reserved_as_local = false
-cr_as_local = false
-non_argument_as_local = false
-non_volatile_as_local = false
+skip_lr = true
+skip_msr = true
+ctr_as_local = true
+xer_as_local = true
+reserved_as_local = true
+cr_as_local = true
+non_argument_as_local = true
+non_volatile_as_local = true
 
 restgprlr_14_address = 0x823ed150
 savegprlr_14_address = 0x823ed100
@@ -68,3 +68,71 @@ functions = [
     { address = 0x82275AA8, size = 0x750 },
     { address = 0x823A2540, size = 0x1638 }
 ]
+
+invalid_instructions = [
+    { data = 0x00000000, size = 4 },  # Padding
+    { data = 0x831B1C90, size = 8 },  # C++ Frame Handler
+    { data = 0x8324B3BC, size = 8 },  # C Specific Frame Handler
+    { data = 0x831C8B50, size = 8 },  # Unknown Frame Handler
+    { data = 0x00485645, size = 44 }  # End of .text
+]
+
+# Memory Management
+[[midasm_hook]]
+name = "MemoryAllocatorHook"
+address = 0x82090000
+registers = ["r3", "r4"]
+
+[[midasm_hook]]
+name = "MemoryDeallocatorHook"
+address = 0x82090070
+registers = ["r3"]
+
+# File System
+[[midasm_hook]]
+name = "FileOpenHook"
+address = 0x82150C58
+registers = ["r3", "r4"]
+
+[[midasm_hook]]
+name = "FileCloseHook"
+address = 0x82150D20
+registers = ["r3"]
+
+[[midasm_hook]]
+name = "FileReadHook"
+address = 0x82150E88
+registers = ["r3", "r4", "r5"]
+
+# Graphics
+[[midasm_hook]]
+name = "TextureLoadHook"
+address = 0x82176890
+registers = ["r3", "r4"]
+
+[[midasm_hook]]
+name = "TextureUnloadHook"
+address = 0x82176920
+registers = ["r3"]
+
+# Audio
+[[midasm_hook]]
+name = "SoundPlayHook"
+address = 0x82120F0C
+registers = ["r3", "r4"]
+
+[[midasm_hook]]
+name = "SoundStopHook"
+address = 0x82120F88
+registers = ["r3"]
+
+# Input
+[[midasm_hook]]
+name = "InputProcessHook"
+address = 0x8212B7F0
+registers = ["r3", "r4"]
+
+[[midasm_hook]]
+name = "InputStateUpdateHook"
+address = 0x8212B888
+registers = ["r3"]
